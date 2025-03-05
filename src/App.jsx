@@ -1,14 +1,23 @@
 import { useState } from 'react'
-const flag = true
+// 三种情况渲染
+const list = [0, 1, 3]
+function getContent(num) {
+  if (num == 0) {
+    return <div>这是数字0的样式</div>
+  } else if (num == 1) {
+    return <div>这是数字1的样式</div>
+  } else {
+    return <div>这是数字3的样式</div>
+  }
+}
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className='container'>
-      {!flag && '是否显示'}
-      <div>
-        {flag ? '已登陆' : '未登录'}
-      </div>
+      <ul>
+        {list.map(item => <li key={item}>{getContent(item)}</li>)}
+      </ul>
     </div>
   )
 }
