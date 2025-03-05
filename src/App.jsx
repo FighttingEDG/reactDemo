@@ -1,16 +1,19 @@
 import { useState } from 'react'
-// 组件，一定要首字母大写
-function Component1(){
-  return <button onClick={()=>{console.log('哈哈')}}>组件按钮</button>
-}
 function App() {
-  const [count, setCount] = useState(0)
+  // useState
+  // useState(1)返回的是一个数组
+  const [num, setNum] = useState(1)
+  function subtract() {
+    setNum(num - 1)
+  }
+  function add() {
+    setNum(num + 1)
+  }
   return (
     <div>
-      {/* 自闭和 */}
-      <Component1 />
-      {/* 成对标签 */}
-      <Component1></Component1>
+      {num}
+      <button onClick={subtract}>减</button>
+      <button onClick={add}>加</button>
     </div>
   )
 }
