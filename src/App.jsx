@@ -2,6 +2,7 @@ import { use, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
+import classNames from 'classnames'
 /**
  * 评论列表的渲染和操作
  *
@@ -107,7 +108,7 @@ const App = () => {
           <li className="nav-sort">
             {/* 高亮类名： active */}
             {tabs.map((item, index) =>
-              <span className={`nav-item ${type === item.type && 'active'}`} key={index}
+              <span className={classNames('nav-item',{active: type == item.type})} key={index}
                 onClick={() => handlerTab(item.type)}>{item.text}</span>)}
           </li>
         </ul>
