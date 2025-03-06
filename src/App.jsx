@@ -1,15 +1,20 @@
-import { use, useState } from 'react'
+import { use, useState,useRef } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
 import classNames from 'classnames'
 
 const App = () => {
-const [value,setValue] = useState('默认')
+  const inputRef = useRef(null)
+  //  渲染完才可用
+const handlerClick = ()=>{
+  console.log(inputRef.current)
+  console.log(inputRef.current.value)
+}
   return (
     <div className="app">
-      {value}
-      <input type="text" value={value} onChange={(e)=>setValue(e.target.value)} />
+      <input type="text" ref={inputRef} />
+      <button onClick={handlerClick}>按钮</button>
     </div>
   )
 }
