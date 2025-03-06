@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 
@@ -77,6 +77,11 @@ const tabs = [
 const App = () => {
   // 使用useState
   const [defaultList, setDefaultList] = useState(list)
+  // 因为处理的是useState，所以需要在组件内部处理数组
+  const handlerDel = (id) => {
+    // 过滤defaultList
+    setDefaultList(defaultList.filter(item => item.rpid !== id))
+  }
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -120,38 +125,37 @@ const App = () => {
         <div className="reply-list">
           {/* 评论项 */}
           {defaultList.map(item =>
-            (<div className="reply-item" key={item.rpid}>
-              {/* 头像 */}
-              <div className="root-reply-avatar">
-                <div className="bili-avatar">
-                  <img
-                    className="bili-avatar-img"
-                    alt=""
-                    src={avatar}
-                  />
-                </div>
+          (<div className="reply-item" key={item.rpid}>
+            {/* 头像 */}
+            <div className="root-reply-avatar">
+              <div className="bili-avatar">
+                <img
+                  className="bili-avatar-img"
+                  alt=""
+                  src={avatar}
+                />
               </div>
+            </div>
 
-              <div className="content-wrap">
-                {/* 用户名 */}
-                <div className="user-info">
-                  <div className="user-name">{item.user.uname}</div>
-                </div>
-                {/* 评论内容 */}
-                <div className="root-reply">
-                  <span className="reply-content">{item.content}</span>
-                  <div className="reply-info">
-                    {/* 评论时间 */}
-                    <span className="reply-time">{item.ctime}</span>
-                    {/* 评论数量 */}
-                    <span className="reply-time">点赞数:{item.like}</span>
-                    <span className="delete-btn">
-                      删除
-                    </span>
-                  </div>
+            <div className="content-wrap">
+              {/* 用户名 */}
+              <div className="user-info">
+                <div className="user-name">{item.user.uname}</div>
+              </div>
+              {/* 评论内容 */}
+              <div className="root-reply">
+                <span className="reply-content">{item.content}</span>
+                <div className="reply-info">
+                  {/* 评论时间 */}
+                  <span className="reply-time">{item.ctime}</span>
+                  {/* 评论数量 */}
+                  <span className="reply-time">点赞数:{item.like}</span>
+                  {/* user下的id等于评论list下的uid才显示删除 */}
+                  {user.uid === item.user.uid && <span className="delete-btn" onClick={() => handlerDel(item.rpid)}>删除</span>}
                 </div>
               </div>
-            </div>)
+            </div>
+          </div>)
           )}
         </div>
       </div>
