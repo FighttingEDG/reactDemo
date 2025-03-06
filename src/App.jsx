@@ -77,10 +77,16 @@ const tabs = [
 const App = () => {
   // 使用useState
   const [defaultList, setDefaultList] = useState(list)
+  // tab栏
+  const [type,setType] = useState('hot');
   // 因为处理的是useState，所以需要在组件内部处理数组
   const handlerDel = (id) => {
     // 过滤defaultList
     setDefaultList(defaultList.filter(item => item.rpid !== id))
+  }
+  const handlerTab = (str) => {
+    console.log(str)
+    setType(str)
   }
   return (
     <div className="app">
@@ -94,8 +100,9 @@ const App = () => {
           </li>
           <li className="nav-sort">
             {/* 高亮类名： active */}
-            <span className='nav-item'>最新</span>
-            <span className='nav-item'>最热</span>
+            {tabs.map((item, index) => 
+            <span className={`nav-item ${type === item.type && 'active'}`} key={index}
+            onClick={() => handlerTab(item.type)}>{item.text}</span>)}
           </li>
         </ul>
       </div>
