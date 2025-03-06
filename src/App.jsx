@@ -3,6 +3,7 @@ import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
+import dayjs from 'dayjs';
 /**
  * 评论列表的渲染和操作
  *
@@ -112,7 +113,7 @@ const App = () => {
       // 评论内容
       content: content,
       // 评论时间
-      ctime: '10-18 08:15',
+      ctime: dayjs(new Date()).format('MM-DD hh:mm'),
       like: 88
     }])
   }
