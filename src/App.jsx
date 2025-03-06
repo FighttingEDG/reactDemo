@@ -1,7 +1,7 @@
 import { use, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
-
+import _ from 'lodash'
 /**
  * 评论列表的渲染和操作
  *
@@ -35,7 +35,7 @@ const list = [
     },
     content: '我寻你千百度 日出到迟暮',
     ctime: '11-13 11:29',
-    like: 88,
+    like: 98,
   },
   {
     rpid: 1,
@@ -75,18 +75,24 @@ const tabs = [
 ]
 
 const App = () => {
-  // 使用useState
-  const [defaultList, setDefaultList] = useState(list)
+  // 使用useState,默认最热排序
+  const [defaultList, setDefaultList] = useState(_.orderBy(list,'like','desc'))
   // tab栏
-  const [type,setType] = useState('hot');
+  const [type, setType] = useState('hot');
   // 因为处理的是useState，所以需要在组件内部处理数组
   const handlerDel = (id) => {
     // 过滤defaultList
     setDefaultList(defaultList.filter(item => item.rpid !== id))
   }
   const handlerTab = (str) => {
-    console.log(str)
     setType(str)
+    // lodash排序
+    // 最新或最热排序
+    if (str === 'hot') {
+      setDefaultList(_.orderBy(defaultList,'like','desc'))
+    } else {
+      setDefaultList(_.orderBy(defaultList,'ctime','desc'))
+    }
   }
   return (
     <div className="app">
@@ -100,13 +106,12 @@ const App = () => {
           </li>
           <li className="nav-sort">
             {/* 高亮类名： active */}
-            {tabs.map((item, index) => 
-            <span className={`nav-item ${type === item.type && 'active'}`} key={index}
-            onClick={() => handlerTab(item.type)}>{item.text}</span>)}
+            {tabs.map((item, index) =>
+              <span className={`nav-item ${type === item.type && 'active'}`} key={index}
+                onClick={() => handlerTab(item.type)}>{item.text}</span>)}
           </li>
         </ul>
       </div>
-
       <div className="reply-wrap">
         {/* 发表评论 */}
         <div className="box-normal">
