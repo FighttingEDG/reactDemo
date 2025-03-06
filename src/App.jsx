@@ -2,6 +2,7 @@ import { use, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
+import { v4 as uuidv4 } from 'uuid';
 /**
  * 评论列表的渲染和操作
  *
@@ -101,7 +102,7 @@ const App = () => {
     setDefaultList([...defaultList,
     {
       // 评论id
-      rpid: 4,
+      rpid: uuidv4(),
       // 用户信息
       user: {
         uid: '13258165',
@@ -112,8 +113,7 @@ const App = () => {
       content: content,
       // 评论时间
       ctime: '10-18 08:15',
-      like: 88,
-
+      like: 88
     }])
   }
   return (
