@@ -1,19 +1,28 @@
 import { useState } from 'react'
+
+
 function App() {
-  // useState
-  // useState(1)返回的是一个数组
-  const [num, setNum] = useState(1)
-  function subtract() {
-    setNum(num - 1)
+  // 修改对象属性，并且驱动视图
+  const [form, setForm] = useState({
+    name: 'xiaobai',
+    age: 11
+  })
+  // 不可以改变视图
+  const handlerClick = () => {
+    form.name = 'xiaohei'
   }
-  function add() {
-    setNum(num + 1)
+  // 可以改变视图
+  const handlerClick2 = () => {
+    setForm({
+      ...form,
+      name: 'jevon'
+    })
   }
   return (
     <div>
-      {num}
-      <button onClick={subtract}>减</button>
-      <button onClick={add}>加</button>
+      {form.name}
+      <button onClick={handlerClick}>按钮</button>
+      <button onClick={handlerClick2}>按钮</button>
     </div>
   )
 }
