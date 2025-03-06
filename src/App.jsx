@@ -1,28 +1,15 @@
 import { useState } from 'react'
-
-
+import '../src/index.css'
+const style = { color: 'skyblue', fontSize: '23px' }
 function App() {
-  // 修改对象属性，并且驱动视图
-  const [form, setForm] = useState({
-    name: 'xiaobai',
-    age: 11
-  })
-  // 不可以改变视图
-  const handlerClick = () => {
-    form.name = 'xiaohei'
-  }
-  // 可以改变视图
-  const handlerClick2 = () => {
-    setForm({
-      ...form,
-      name: 'jevon'
-    })
-  }
   return (
     <div>
-      {form.name}
-      <button onClick={handlerClick}>按钮</button>
-      <button onClick={handlerClick2}>按钮</button>
+      {/* 行内样式控制 */}
+      <div style={{ color: 'red', fontSize: '20px' }}>分身乏术</div>
+      {/* 变量存储 */}
+      <div style={style}>分身乏术</div>
+      {/* 类名控制 */}
+      <div className='box'>耳热</div>
     </div>
   )
 }
