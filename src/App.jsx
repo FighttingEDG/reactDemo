@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { use, useState, useRef } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
@@ -98,6 +98,7 @@ const App = () => {
   }
   // 发布评论
   const [content, setContent] = useState('')
+  const publishRef = useRef(null)
   const handlerPublish = () => {
     // 拼接数组
     setDefaultList([...defaultList,
@@ -116,6 +117,9 @@ const App = () => {
       ctime: dayjs(new Date()).format('MM-DD hh:mm'),
       like: 88
     }])
+    // 清空内容并重新聚焦
+    setContent('')
+    publishRef.current.focus();
   }
   return (
     <div className="app">
@@ -151,6 +155,7 @@ const App = () => {
               placeholder="发一条友善的评论"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              ref={publishRef}
             />
             {/* 发布按钮 */}
             <div className="reply-box-send" onClick={handlerPublish}>
