@@ -1,35 +1,29 @@
-import { useState, createContext, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-// app传数据给B
-// App组件套A，A套B组件
-const mesCtx = createContext();
-function A() {
-  return <div>
-    这是A组件
-    {/* B组件 */}
-    <B />
-  </div>
-}
-function B() {
-  // 使用对应的上下文
-  const ctxMes = useContext(mesCtx)
-  return <div>
-    这是B组件
-    <br />
-    {ctxMes}
-  </div>
-}
+const URL = 'http://geek.itheima.net/v1_0/channels'
 const App = () => {
-  const mes = '顶层组件数据'
+  const [list, setList] = useState([])
+  // 副作用函数
+  // 空数组，副作用函数只执行一次
+  useEffect(() => {
+    async function getList() {
+      const res = await fetch(URL)
+      const jsonData = await res.json()
+      setList(jsonData.data.channels)
+    }
+    getList();
+  }, [])
   return (
     <div className="app">
-      <mesCtx.Provider value={mes}>
-        <A />
-      </mesCtx.Provider>
+      <ul>
+        {list.map(item => <li key={item.id}>
+          {item.name}
+        </li>)}
+      </ul>
     </div>
   )
 }
