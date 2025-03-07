@@ -1,29 +1,18 @@
 import { useState, useEffect } from 'react'
-import './App.scss'
-import avatar from './images/bozai.png'
-import _ from 'lodash'
-import { v4 as uuidv4 } from 'uuid';
-import dayjs from 'dayjs';
-const URL = 'http://geek.itheima.net/v1_0/channels'
+// 不同依赖项
 const App = () => {
-  const [list, setList] = useState([])
-  // 副作用函数
-  // 空数组，副作用函数只执行一次
+  // 1.没有依赖项   初始+状态更新
   useEffect(() => {
-    async function getList() {
-      const res = await fetch(URL)
-      const jsonData = await res.json()
-      setList(jsonData.data.channels)
-    }
-    getList();
-  }, [])
+    console.log('没有依依赖项执行了')
+  })
+  const [count, setCount] = useState(0)
+  // 2.空数组       初始
+  // 3.有依赖项      初始+依赖项更新+状态更新
   return (
     <div className="app">
-      <ul>
-        {list.map(item => <li key={item.id}>
-          {item.name}
-        </li>)}
-      </ul>
+      <div>没有依赖项{count}</div>
+      {/* 状态更新就会触发 */}
+      <button onClick={() => setCount(count + 1)}>+1</button>
     </div>
   )
 }
