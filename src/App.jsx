@@ -4,7 +4,7 @@ function Son() {
     const timer = setInterval(() => {
       console.log('定时器')
     }, 1000)
-    // 清除副作用
+    // 清除副作用----react约定的写法
     return () => {
       console.log('清除副作用')
       clearInterval(timer)
