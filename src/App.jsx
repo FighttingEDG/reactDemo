@@ -1,17 +1,24 @@
-import { useState, useEffect } from 'react'
-// 不同依赖项
-const App = () => {
-  // 1.没有依赖项   初始+状态更新
-  // 2.空数组       初始
-  // 3.有依赖项      初始+依赖项更新+状态更新（后两者算一次）
-  const [count, setCount] = useState(0)
+import { useEffect, useState } from 'react'
+function Son() {
   useEffect(() => {
-    console.log('有依赖项依赖项执行了')
-  },[count])
+    const timer = setInterval(() => {
+      console.log('定时器')
+    }, 1000)
+    // 清除副作用
+    return () => {
+      console.log('清除副作用')
+      clearInterval(timer)
+    }
+  }, [])
+  return <div>这是子组件</div>
+}
+const App = () => {
+  const [show, setShow] = useState(true)
   return (
     <div className="app">
-      <div>有依赖项依赖项{count}</div>
-      <button onClick={() => setCount(count + 1)}>+1</button>
+      {/* 条件渲染，false的时候直接卸载组件 */}
+      {show && <Son />}
+      <button onClick={() => setShow(false)}>卸载Son组件</button>
     </div>
   )
 }
