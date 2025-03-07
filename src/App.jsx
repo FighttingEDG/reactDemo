@@ -5,21 +5,27 @@ import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
 // 子传父
-function Son(props) {
+function Son({ onSendMes }) {
   const sonData = '子组件的数据'
   return <div>
     这是子组件
-    <button onClick={()=>props.sendMes(sonData)}>发送</button>
+    {sonData}
+    <button onClick={() => onSendMes(sonData)}>发送</button>
     {/* 内容来自于父组件 */}
   </div>
 }
 const App = () => {
+  const [str,setStr] = useState(null)
   const getMes = (mes) => {
+    setStr(mes)
     console.log(mes)
   }
   return (
     <div className="app">
-      <Son sendMes={getMes}>
+      {/* 子组件的数据 */}
+      {str}
+      <br />
+      <Son onSendMes={getMes}>
       </Son>
     </div>
   )
