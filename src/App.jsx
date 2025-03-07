@@ -4,29 +4,31 @@ import avatar from './images/bozai.png'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-// 子传父
-function Son({ onSendMes }) {
-  const sonData = '子组件的数据'
+// 兄弟组件通信
+function A({ sendStr }) {
+  const AName = 'a兄弟数据'
   return <div>
-    这是子组件
-    {sonData}
-    <button onClick={() => onSendMes(sonData)}>发送</button>
-    {/* 内容来自于父组件 */}
+    A兄弟组件
+    <button onClick={() => sendStr(AName)}>A按钮</button>
   </div>
 }
+function B({AStr}) {
+  return <div>
+    B兄弟组件
+    <br />
+    {/* A组件字符串 */}
+    {AStr}
+    </div>
+}
 const App = () => {
-  const [str,setStr] = useState(null)
-  const getMes = (mes) => {
-    setStr(mes)
-    console.log(mes)
+  const [AStr, setAStr] = useState(null)
+  const sendStr = (str) => {
+    setAStr(str)
   }
   return (
     <div className="app">
-      {/* 子组件的数据 */}
-      {str}
-      <br />
-      <Son onSendMes={getMes}>
-      </Son>
+      <A sendStr={sendStr} />
+      <B AStr={AStr}/>
     </div>
   )
 }
