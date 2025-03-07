@@ -4,21 +4,23 @@ import avatar from './images/bozai.png'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-// 父传子
-function Son(props){
-  console.log(props)
+// 子传父
+function Son(props) {
+  const sonData = '子组件的数据'
   return <div>
     这是子组件
-    <div>{props.appName}</div>
-    {props.jsx}
+    <button onClick={()=>props.sendMes(sonData)}>发送</button>
+    {/* 内容来自于父组件 */}
   </div>
 }
 const App = () => {
-  const appName = '父组件数据'
+  const getMes = (mes) => {
+    console.log(mes)
+  }
   return (
     <div className="app">
-      {/* 可传递最复杂的jsx */}
-      <Son appName={appName} jsx={<span>这是个span标签</span>}/>
+      <Son sendMes={getMes}>
+      </Son>
     </div>
   )
 }
