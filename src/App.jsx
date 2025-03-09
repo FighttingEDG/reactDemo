@@ -1,18 +1,14 @@
 import { useState } from 'react'
-function useToggle() {
-  const [value, setValue] = useState(true)
-  const toggle = () => setValue(!value)
-  // 所谓封装hook，就是把用到的变量，方法返回出去
-  return { value, toggle }
-}
+// 情况一：要在组件顶层使用
+const [value, setValue] = useState('')
 const App = () => {
-  // 有返回，可以解构
-  const { value, toggle } = useToggle()
-
+  // 情况二：不能在id，for或嵌套在函数中使用
+  if (Math.random() > 0.5) {
+    const [value, setValue] = useState('')
+  }
   return (
     <div className="app">
-      {value && <div>app</div>}
-      <button onClick={toggle}>切换</button>
+      app组件
     </div>
   )
 }
