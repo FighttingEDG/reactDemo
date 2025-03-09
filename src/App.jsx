@@ -68,7 +68,8 @@ const tabs = [
   { type: 'time', text: '最新' },
 ]
 
-const App = () => {
+// 封装获取数据的hook
+function useGetList() {
   const [commentList, setCommentList] = useState([])
   useEffect(() => {
     async function getList() {
@@ -77,6 +78,14 @@ const App = () => {
     }
     getList()
   }, [])
+  return {
+    commentList,
+    setCommentList
+  }
+}
+const App = () => {
+  // 结构后继续使用
+  const { commentList, setCommentList } = useGetList();
 
   return (
     <div className="app">
