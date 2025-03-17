@@ -1,28 +1,26 @@
-import React, { useState, useEffect, useReducer } from 'react'
-// 先定义reducer
-function reducer(state, action) {
-  switch (action.type) {
-    case 'INC':
-      return state + 1
-    case 'DEC':
-      return state - 1
-    // 传参
-    case 'SET':
-      return state + action.payload
-    default:
-      return state
-  }
-}
+import React, { useState, memo, useCallback } from 'react'
+const Input = memo(function Input({ onChange }) {
+  console.log('子组件更新了')
+  return (
+    <div>
+      <input type="text" onChange={(e) => onChange(e.target.value)} />
+    </div>
+  )
+})
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, 0)
 
+  // 子组件不会更新
+  const changeHandler = useCallback((value) =>
+    console.log(value)
+    , [])
+  // 子组件会更新
+  // const changeHandler = () => console.log(2)
+  // 触发父组件重新渲染的函数
+  const [count, setCount] = useState(0)
   return (
     <div className="app">
-      {state}
-      <button onClick={() => dispatch({ type: 'INC' })}>加</button>
-      <button onClick={() => dispatch({ type: 'DEC' })}>减</button>
-      {/* 传参 */}
-      <button onClick={() => dispatch({ type: 'SET', payload: 100 })}>传值</button>
+      <Input onChange={changeHandler} />
+      <button onClick={() => setCount(count + 1)}>{count}</button>
     </div>
   )
 }
