@@ -4,7 +4,6 @@ import { useImperativeHandle } from "react";
 // 需要父组件传ref和placeholder
 function CustomInput({ ref, placeholder }) {
     const inputRef = useRef(null);
-
     useImperativeHandle(ref, () => ({
         // 相当于()=>{ return {} }
         focus: () => {
