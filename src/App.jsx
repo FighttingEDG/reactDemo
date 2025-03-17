@@ -1,18 +1,24 @@
-import React, { useState, useRef } from 'react'
-import CustomInput from './component/son.jsx'
-const App = () => {
-  // 供接收的ref
-  const inputRef = useRef(null)
-  // 父组件的state
-  const [value, setValue] = useState('')
-  function handleClick (){
-    inputRef.current.focus();
+import React, { Component } from 'react'
+
+class Counter extends Component {
+  // 定义状态变量
+  state = { count: 0 }
+  // 事件回调
+  clickHandler = () => {
+    this.setState({
+      count: this.state.count + 1
+    })
   }
-  // 父组件的方法
+  // ui模板(jsx)
+  render(){
+    return <button onClick={this.clickHandler}>{this.state.count}</button>
+  }
+}
+
+const App = () => {
   return (
     <div className="app">
-      <input type="text" ref={inputRef} placeholder='请输入内容' />
-      <button onClick={() => handleClick()}>聚焦</button>
+      <Counter />
     </div>
   )
 }
