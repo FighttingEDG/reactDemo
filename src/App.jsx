@@ -1,26 +1,18 @@
-import React, { useState, memo, useCallback } from 'react'
-const Input = memo(function Input({ onChange }) {
-  console.log('子组件更新了')
-  return (
-    <div>
-      <input type="text" onChange={(e) => onChange(e.target.value)} />
-    </div>
-  )
-})
+import React, { useState, useRef } from 'react'
+import CustomInput from './component/son.jsx'
 const App = () => {
-
-  // 子组件不会更新
-  const changeHandler = useCallback((value) =>
-    console.log(value)
-    , [])
-  // 子组件会更新
-  // const changeHandler = () => console.log(2)
-  // 触发父组件重新渲染的函数
-  const [count, setCount] = useState(0)
+  // 供接收的ref
+  const inputRef = useRef(null)
+  // 父组件的state
+  const [value, setValue] = useState('')
+  function handleClick (){
+    inputRef.current.focus();
+  }
+  // 父组件的方法
   return (
     <div className="app">
-      <Input onChange={changeHandler} />
-      <button onClick={() => setCount(count + 1)}>{count}</button>
+      <input type="text" ref={inputRef} placeholder='请输入内容' />
+      <button onClick={() => handleClick()}>聚焦</button>
     </div>
   )
 }
