@@ -1,25 +1,28 @@
-import React, { Component, useState } from 'react'
+import { create } from "zustand"
 
-class Son extends Component {
-  render() {
-    return <div>子组件
-      <button onClick={() => this.props.sendFun('我是子组件中的数据')}>发送数据</button>
-    </div>
-  }
-}
-class Parent extends Component {
-  sendFun = (sonMsg) => {
-    console.log(sonMsg)
-  }
-  render() {
-    return <div>
-      父组件
-      <Son sendFun={this.sendFun} />
-    </div>
-  }
-}
+// 创建store
+const useStore = create((set) => ({
+  count: 1,
+  inc: () => set((state) => ({ count: state.count + 1 })),
+}))
 
+function Counter() {
+  // 消费数据
+  const { count, inc } = useStore()
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={inc}>one up</button>
+    </div>
+  )
+}
 const App = () => {
+  return (
+    <>
+      <Counter />
+    </>
+  )
+
 }
 
 export default App
